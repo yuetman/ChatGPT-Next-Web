@@ -38,6 +38,7 @@ const id: PartialLocaleType = {
       newm: "Mulai Chat Baru dengan Masks",
       next: "Chat Selanjutnya",
       prev: "Chat Sebelumnya",
+      restart: "Restart klien",
       clear: "Bersihkan Percakapan",
       del: "Hapus Chat",
     },
@@ -157,6 +158,8 @@ const id: PartialLocaleType = {
       IsChecking: "Memeriksa pembaruan...",
       FoundUpdate: (x: string) => `Versi terbaru ditemukan: ${x}`,
       GoToUpdate: "Perbarui Sekarang",
+      Success: "Pembaruan Berhasil.",
+      Failed: "Pembaruan Gagal.",
     },
     AutoGenerateTitle: {
       Title: "Hasilkan Judul Otomatis",
