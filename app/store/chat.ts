@@ -26,6 +26,7 @@ export type ChatMessage = RequestMessage & {
   isError?: boolean;
   id: string;
   model?: ModelType;
+  tag?: string;
 };
 
 export function createMessage(override: Partial<ChatMessage>): ChatMessage {
@@ -56,6 +57,7 @@ export interface ChatSession {
   clearContextIndex?: number;
 
   mask: Mask;
+  favoriteView?: boolean;
 }
 
 export const DEFAULT_TOPIC = Locale.Store.DefaultTopic;
