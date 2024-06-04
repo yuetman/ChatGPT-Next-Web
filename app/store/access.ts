@@ -120,18 +120,38 @@ export const useAccessStore = createPersistStore(
           fetchState = 2;
         });
     },
-    fetchAvailableModels() {
-      if (fetchState > 0 || getClientConfig()?.buildMode === "export") return;
-      fetch("/v1/models", {
-        method: "post",
+    fetchAvailableModels(url: string, apiKey: string): Promise<string>{
+      // if (fetchState > 0 || getClientConfig()?.buildMode === "export") 
+      //   return Promise.resolve(DEFAULT_ACCESS_STATE.customModels);
+
+      fetchState = 1;
+      return fetch(url+"/v1/models", {
+        method: "get",
         body: null,
         headers: {
-          ...getHeaders(),
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${apiKey}`,
         },
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log("[Available Models] got available models from API:", res);
+          // 如果res里的data数组长度大于0，则说明有可用的模型，提取其中的id属性，使用英文逗号进行字符串连接
+          if (res.data && res.data.length > 0){
+            const excludedKeywords = ['text-', 'moderation', 'embedding', 'dall-e-', 'davinci', 'babbage', 'midjourney', 'whisper', 'tts'];
+            const availableModels = res.data
+              .filter((model: any) => !excludedKeywords.some(keyword => model.id.toLowerCase().includes(keyword.toLowerCase())))
+              .map((model: any) => model.id)
+              .join(',');
+            console.log("availableModels",availableModels);
+            return `-all,${availableModels}`;
+          }
+          else{
+            return DEFAULT_ACCESS_STATE.customModels;
+          }
+        })
+        .catch((error) => {
+          console.error("[Access] failed to fetch available models: ", error);
+          return DEFAULT_ACCESS_STATE.customModels;
         })
         .finally(() => {
           fetchState = 2;
