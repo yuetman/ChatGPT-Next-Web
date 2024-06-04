@@ -120,6 +120,23 @@ export const useAccessStore = createPersistStore(
           fetchState = 2;
         });
     },
+    fetchAvailableModels() {
+      if (fetchState > 0 || getClientConfig()?.buildMode === "export") return;
+      fetch("/v1/models", {
+        method: "post",
+        body: null,
+        headers: {
+          ...getHeaders(),
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log("[Available Models] got available models from API:", res);
+        })
+        .finally(() => {
+          fetchState = 2;
+        });
+    }
   }),
   {
     name: StoreKey.Access,
