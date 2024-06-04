@@ -1002,6 +1002,22 @@ export function Settings() {
                           }}
                         />
                       </ListItem>
+                      {/* 获取可用模型列表功能 */}
+                      <ListItem
+                        title={Locale.Settings.Access.AvailableModels.Title}
+                        subTitle={Locale.Settings.Access.AvailableModels.SubTitle}
+                      >
+                        <IconButton
+                          text={Locale.Settings.Access.AvailableModels.Action}
+                          onClick={async () => {
+                            if (await showConfirm(Locale.Settings.Access.AvailableModels.Confirm)) {
+                              // appConfig.updateAvailableModels();
+                              accessStore.fetchAvailableModels();
+                            }
+                          }}
+                          type="primary"
+                        />
+                      </ListItem>
                     </>
                   )}
                   {accessStore.provider === ServiceProvider.Azure && (

@@ -347,6 +347,12 @@ const cn = {
           SubTitle: "选择一个特定的 API 版本",
         },
       },
+      AvailableModels:{
+        Title: "可用模型",
+        SubTitle: "点击获取可用模型列表",
+        Action: "一键提取模型",
+        Confirm: "确认拉取可用模型列表并填入自定义模型名？"
+      },
       CustomModel: {
         Title: "自定义模型名",
         SubTitle: "增加自定义模型可选项，使用英文逗号隔开",
